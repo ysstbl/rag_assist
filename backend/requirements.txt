@@ -1,0 +1,22 @@
+# backend/requirements.txt
+
+# Server & API
+fastapi>=0.110.0
+uvicorn>=0.29.0
+python-dotenv>=1.0.1
+pydantic>=2.6.4
+
+# LLM & RAG Orchestration
+langchain>=0.1.13
+langchain-core>=0.1.33
+langchain-groq>=0.1.2
+groq>=0.4.2
+
+# Document Processing & Embeddings
+sentence-transformers>=2.6.1
+pypdf>=4.1.0
+
+# Vector Database (Uncomment the one you are using)
+pinecone-client>=3.2.2
+# chromadb>=0.4.24
+# weaviate-client>=4.5.4
