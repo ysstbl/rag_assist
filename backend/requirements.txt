@@ -16,7 +16,6 @@ groq>=0.4.2
 sentence-transformers>=2.6.1
 pypdf>=4.1.0
 
-# Vector Database (Uncomment the one you are using)
-pinecone-client>=3.2.2
-# chromadb>=0.4.24
-# weaviate-client>=4.5.4
+# Vector Database 
+chromadb>=0.4.24
+
