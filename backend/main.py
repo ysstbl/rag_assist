@@ -14,7 +14,7 @@ from langchain_core.runnables import RunnablePassthrough
 from langchain_core.output_parsers import StrOutputParser
 
 # Database and LLM Imports
-from langchain_chroma import Chroma
+from langchain_pinecone import PineconeVectorStore
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_groq import ChatGroq
 
@@ -36,17 +36,16 @@ app.add_middleware(
 print("Loading local HuggingFace embeddings...")
 embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
 
-print("Loading existing Chroma database...")
-DB_DIR = "./unified_tech_db"
-vectorstore = Chroma(
-    collection_name="tech_documentation",
-    embedding_function=embeddings,
-    persist_directory=DB_DIR
+print("Connecting to Pinecone database...")
+# Requires PINECONE_API_KEY environment variable in Render dashboard
+vectorstore = PineconeVectorStore(
+    index_name="tech-documentation",  # Replace with your actual Pinecone index name
+    embedding=embeddings
 )
 
 print("Initializing Groq LLM...")
 llm = ChatGroq(
-    model="openai/gpt-oss-20b",
+    model="llama3-8b-8192", # Valid Groq model identifier
     temperature=0
 )
 
@@ -81,16 +80,10 @@ def build_rag_chain(active_tech: str):
         5. Avoid heavy formatting: Do not use large markdown headers (like # or ##) or massive tables. Keep the visual flow smooth.
         6. Honesty: If the answer isn't in the context, politely say you don't have that information based on the docs.
 
-        STRICT FORMATTING RULES:
-            1. Conversational tone: Speak naturally, directly, and clearly. Walk the user through the 'what', 'why', and 'how'.
-            2. Clean structure: Organize your thoughts logically using short paragraphs and simple bullet lists. Use **bold text** to highlight key terms.
+        Context:
+        {context}
 
-
-
-    Context:
-    {context}
-
-    User Question: {question}"""
+        User Question: {question}"""
 
     prompt = PromptTemplate.from_template(template)
 
@@ -154,6 +147,6 @@ async def chat(request: ChatRequest):
     except Exception as e:
         print("\n" + "!" * 50)
         print("ERROR IN /chat:")
-        traceback.print_exc()  # This will print the exact line causing the crash in your terminal!
+        traceback.print_exc() 
         print("!" * 50 + "\n")
         raise HTTPException(status_code=500, detail=str(e))
