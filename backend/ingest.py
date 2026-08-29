@@ -1,23 +1,24 @@
 import os
 import glob
+import time
+from dotenv import load_dotenv
 from langchain_community.document_loaders import TextLoader
 from langchain_text_splitters import MarkdownHeaderTextSplitter, RecursiveCharacterTextSplitter
-from langchain_community.vectorstores import Chroma
-# Remove this:
-# from langchain_google_genai import GoogleGenerativeAIEmbeddings
-
-# Add this:
 from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_pinecone import PineconeVectorStore
 
-# Set your API key
-os.environ["GOOGLE_API_KEY"] = "AIzaSyB47A72Zbwq_yGB6daCQ2GXFSVEWv1EVQs"
+# Load environment variables (Make sure PINECONE_API_KEY is in your .env file)
+load_dotenv()
+
+if not os.getenv("PINECONE_API_KEY"):
+    raise ValueError("PINECONE_API_KEY environment variable not set. Please add it to your .env file.")
 
 # 1. Configure local directories (Adjust paths to your local folders)
 DOC_CONFIGS = {
     "react": {
-        "dir": "./react.dev",  # Update to your local path
+        "dir": "./react.dev",  
         "pattern": "**/*.md*",
-        "max_files": 50         # Limit for fast local ingestion
+        "max_files": 50         
     },
     "css": {
         "dir": "./mdn-content/files/en-us/web/css",
@@ -83,26 +84,19 @@ for tech_name, config in DOC_CONFIGS.items():
 
 print(f"\nTotal chunks prepared across all technologies: {len(all_final_chunks)}")
 
-# 4. Batch Embeddings to Cloud API
-# Remove this:
-# embeddings = GoogleGenerativeAIEmbeddings(model="gemini-embedding-001")
-
-# Add this:
-print("Loading local HuggingFace embeddings (No API limits!)...")
+# 4. Embeddings & Pinecone Upload
+print("Loading local HuggingFace embeddings...")
 embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
 
-# --- ADD THIS INSTEAD ---
-import time
+index_name = "tech-documentation" # Ensure this matches your Pinecone dashboard exactly
+print(f"\nConnecting to Pinecone index '{index_name}'...")
 
-DB_DIR = "./unified_tech_db"
-print(f"\nInitializing Chroma database at {DB_DIR}...")
-vectorstore = Chroma(
-    collection_name="tech_documentation",
-    embedding_function=embeddings,
-    persist_directory=DB_DIR
+vectorstore = PineconeVectorStore(
+    index_name=index_name,
+    embedding=embeddings
 )
 
-# Upload in batches to avoid overwhelming the Google API
+# Upload in batches to ensure reliable network payloads to Pinecone
 BATCH_SIZE = 100
 total_batches = (len(all_final_chunks) + BATCH_SIZE - 1) // BATCH_SIZE
 
@@ -116,7 +110,7 @@ else:
         print(f"Uploading batch {batch_num}/{total_batches} ({len(batch)} chunks)...")
         vectorstore.add_documents(batch)
 
-        # Pause for 2 seconds between batches to respect Google's rate limits
-        time.sleep(2)
+        # Brief pause to respect rate limits on Pinecone's free tier
+        time.sleep(1)
 
-print("\n✅ Ingestion complete! Database saved successfully.")
+print("\n✅ Ingestion complete! Vectors successfully uploaded to Pinecone.")
