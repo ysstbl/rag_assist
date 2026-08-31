@@ -31,7 +31,7 @@ export default function Chat() {
     setQueryCount((prev) => prev + 1); // Increment the query count
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/chat', {
+      const response = await fetch('https://fuzzy-capybara-g44jqrp69654cw6qv-8000.app.github.dev/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ question: userMsg.content, technology: technology }),
