@@ -27,7 +27,10 @@ app = FastAPI(title="Tech Documentation RAG Backend")
 # Enable CORS so your React frontend can communicate with this API
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allows all origins (great for local development)
+    allow_origins=[
+        "*",
+        "https://rag-assist-1.onrender.com"
+        ],  # Allows all origins (great for local development)
     allow_credentials=True,
     allow_methods=["*"],  # Allows all methods (POST, GET, etc.)
     allow_headers=["*"],  # Allows all headers
