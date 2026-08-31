@@ -31,7 +31,7 @@ export default function Chat() {
     setQueryCount((prev) => prev + 1); // Increment the query count
 
     try {
-      const response = await fetch('https://rag-assist.onrender.com', {
+      const response = await fetch('https://rag-assist.onrender.com/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ question: userMsg.content, technology: technology }),
