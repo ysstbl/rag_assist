@@ -17,5 +17,5 @@ sentence-transformers>=2.6.1
 pypdf>=4.1.0
 
 # Vector Database 
-chromadb>=0.4.24
+pinecone
 
