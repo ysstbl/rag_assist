@@ -15,7 +15,7 @@ from langchain_core.output_parsers import StrOutputParser
 
 # Database and LLM Imports
 from langchain_pinecone import PineconeVectorStore
-from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_huggingface import HuggingFaceEndpointEmbeddings
 from langchain_groq import ChatGroq
 
 # ==========================================
@@ -34,7 +34,10 @@ app.add_middleware(
 )
 
 print("Loading local HuggingFace embeddings...")
-embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+embeddings = HuggingFaceEndpointEmbeddings(
+    model="sentence-transformers/all-MiniLM-L6-v2",
+    huggingfacehub_api_token=os.getenv("HUGGINGFACE_API_KEY")
+)
 
 print("Connecting to Pinecone database...")
 # Requires PINECONE_API_KEY environment variable in Render dashboard
