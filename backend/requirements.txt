@@ -19,4 +19,4 @@ pypdf>=4.1.0
 # Vector Database 
 pinecone
 langchain_pinecone
-
+langchain-huggingface
