@@ -78,7 +78,7 @@ export default function App() {
                 <div className="w-3 h-3 rounded-full bg-slate-300"></div>
               </div>
               <div className="mx-auto bg-white border border-slate-200 rounded-md px-32 py-1 text-xs text-slate-400 font-mono shadow-sm">
-                agentflow.dev/chat
+                rag-assist.dev/chat
               </div>
             </div>
 
@@ -95,7 +95,7 @@ export default function App() {
           <div className="text-center max-w-3xl mx-auto mb-20">
             <h2 className="text-3xl font-bold text-slate-900 mb-6">Built on a Modern AI Stack</h2>
             <p className="text-slate-600 text-lg mb-10">
-              AgentFlow leverages a state-of-the-art Retrieval-Augmented Generation (RAG) pipeline to deliver instant, hallucination-free answers directly from the documentation.
+              RAG-Assist leverages a state-of-the-art Retrieval-Augmented Generation (RAG) pipeline to deliver instant, hallucination-free answers directly from the documentation.
             </p>
 
             <div className="flex flex-wrap justify-center gap-4">
