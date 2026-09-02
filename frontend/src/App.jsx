@@ -207,7 +207,7 @@ export default function App() {
              <div className="w-6 h-6 rounded bg-slate-200 flex items-center justify-center text-slate-600 font-bold text-xs">
                A
              </div>
-             <span className="font-medium text-slate-700">AgentFlow</span>
+             <span className="font-medium text-slate-700">Rag-Assist</span>
              <span>© 2026. All rights reserved.</span>
           </div>
           <div className="flex gap-6">
