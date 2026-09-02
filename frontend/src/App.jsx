@@ -42,7 +42,7 @@ export default function App() {
           <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-slate-900 leading-tight">
             Ask your tech docs <br/>
             with <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-amber-500 relative inline-block pb-2">
-              AgentFlow
+              RAG-Assist
               <div className="absolute bottom-0 left-0 w-full h-3 bg-orange-200/50 -z-10 rounded-sm"></div>
             </span>
           </h1>
