@@ -16,7 +16,7 @@ export default function App() {
           <div className="w-8 h-8 rounded-lg bg-orange-600 flex items-center justify-center text-white font-bold shadow-md shadow-orange-600/20">
             A
           </div>
-          <span className="text-xl font-bold tracking-tight text-slate-900">AgentFlow</span>
+          <span className="text-xl font-bold tracking-tight text-slate-900">Rag-assist</span>
         </div>
         <div className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
           <a href="#features" className="hover:text-orange-600 transition-colors">Features</a>
