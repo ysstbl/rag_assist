@@ -14,7 +14,7 @@ export default function App() {
       <nav className="relative z-10 mx-auto max-w-6xl px-6 py-6 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-lg bg-orange-600 flex items-center justify-center text-white font-bold shadow-md shadow-orange-600/20">
-            A
+            R
           </div>
           <span className="text-xl font-bold tracking-tight text-slate-900">Rag-assist</span>
         </div>
