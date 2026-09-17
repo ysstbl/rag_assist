@@ -7,13 +7,13 @@ from langchain_text_splitters import MarkdownHeaderTextSplitter, RecursiveCharac
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_pinecone import PineconeVectorStore
 
-# Load environment variables (Make sure PINECONE_API_KEY is in your .env file)
+
 load_dotenv()
 
 if not os.getenv("PINECONE_API_KEY"):
     raise ValueError("PINECONE_API_KEY environment variable not set. Please add it to your .env file.")
 
-# 1. Configure local directories (Adjust paths to your local folders)
+
 DOC_CONFIGS = {
     "react": {
         "dir": "./react.dev",  
@@ -32,7 +32,7 @@ DOC_CONFIGS = {
     },
 }
 
-# 2. Text Splitters
+
 markdown_splitter = MarkdownHeaderTextSplitter(
     headers_to_split_on=[("#", "Header 1"), ("##", "Header 2"), ("###", "Header 3")],
     strip_headers=False
@@ -44,7 +44,7 @@ recursive_splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(
     separators=["\n\n", "\n", " ", ""]
 )
 
-# 3. Load & Process Documents
+
 all_final_chunks = []
 
 for tech_name, config in DOC_CONFIGS.items():
@@ -53,11 +53,9 @@ for tech_name, config in DOC_CONFIGS.items():
         print(f"⚠️ Skipping {tech_name.upper()}: Directory '{docs_dir}' not found.")
         continue
 
-    # Find matching files locally
     search_path = os.path.join(docs_dir, config["pattern"])
     matched_files = glob.glob(search_path, recursive=True)
 
-    # Cap files for fast local ingestion
     selected_files = matched_files[:config["max_files"]]
     print(f"\n📂 Loading {len(selected_files)} files for {tech_name.upper()}...")
 
@@ -84,11 +82,11 @@ for tech_name, config in DOC_CONFIGS.items():
 
 print(f"\nTotal chunks prepared across all technologies: {len(all_final_chunks)}")
 
-# 4. Embeddings & Pinecone Upload
+
 print("Loading local HuggingFace embeddings...")
 embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
 
-index_name = "tech-documentation" # Ensure this matches your Pinecone dashboard exactly
+index_name = "tech-documentation" 
 print(f"\nConnecting to Pinecone index '{index_name}'...")
 
 vectorstore = PineconeVectorStore(
@@ -96,7 +94,7 @@ vectorstore = PineconeVectorStore(
     embedding=embeddings
 )
 
-# Upload in batches to ensure reliable network payloads to Pinecone
+
 BATCH_SIZE = 100
 total_batches = (len(all_final_chunks) + BATCH_SIZE - 1) // BATCH_SIZE
 
@@ -110,7 +108,7 @@ else:
         print(f"Uploading batch {batch_num}/{total_batches} ({len(batch)} chunks)...")
         vectorstore.add_documents(batch)
 
-        # Brief pause to respect rate limits on Pinecone's free tier
+        
         time.sleep(1)
 
-print("\n✅ Ingestion complete! Vectors successfully uploaded to Pinecone.")
+print("\n Ingestion complete! Vectors successfully uploaded to Pinecone.")
