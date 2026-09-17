@@ -8,14 +8,12 @@ export default function ChatWidget() {
   const sendMessage = async () => {
     if (!input.trim()) return;
 
-    // Add user message to UI immediately
     const userMessage = { role: 'user', content: input };
     setMessages((prev) => [...prev, userMessage]);
     setInput('');
     setIsLoading(true);
 
     try {
-      // Send request to FastAPI
       const response = await fetch('http://127.0.0.1:8000/chat', {
         method: 'POST',
         headers: {
@@ -28,7 +26,6 @@ export default function ChatWidget() {
 
       const data = await response.json();
 
-      // Add Groq's response to UI
       setMessages((prev) => [...prev, { role: 'assistant', content: data.reply }]);
     } catch (error) {
       console.error("Error fetching chat:", error);
@@ -40,7 +37,6 @@ export default function ChatWidget() {
 
   return (
     <div className="w-full max-w-2xl mx-auto flex flex-col h-[500px] border border-gray-200 rounded-lg shadow-sm bg-white overflow-hidden">
-      {/* Messages Area */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
         {messages.length === 0 && (
           <div className="text-center text-gray-400 mt-10">
@@ -72,7 +68,6 @@ export default function ChatWidget() {
         )}
       </div>
 
-      {/* Input Area */}
       <div className="p-4 bg-white border-t border-gray-200 flex gap-2">
         <input
           type="text"
