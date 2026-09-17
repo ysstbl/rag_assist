@@ -8,32 +8,30 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 
-# LCEL Imports
+
 from langchain_core.prompts import PromptTemplate
 from langchain_core.runnables import RunnablePassthrough
 from langchain_core.output_parsers import StrOutputParser
 
-# Database and LLM Imports
+
 from langchain_pinecone import PineconeVectorStore
 from langchain_huggingface import HuggingFaceEndpointEmbeddings
 from langchain_groq import ChatGroq
 
-# ==========================================
-# --- 1. GLOBAL SETUP ---
-# ==========================================
+
 
 app = FastAPI(title="Tech Documentation RAG Backend")
 
-# Enable CORS so your React frontend can communicate with this API
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "*",
         "https://rag-assist-1.onrender.com"
-        ],  # Allows all origins (great for local development)
+        ],  
     allow_credentials=True,
-    allow_methods=["*"],  # Allows all methods (POST, GET, etc.)
-    allow_headers=["*"],  # Allows all headers
+    allow_methods=["*"],  
+    allow_headers=["*"],  
 )
 
 print("Loading local HuggingFace embeddings...")
@@ -43,31 +41,28 @@ embeddings = HuggingFaceEndpointEmbeddings(
 )
 
 print("Connecting to Pinecone database...")
-# Requires PINECONE_API_KEY environment variable in Render dashboard
+
 vectorstore = PineconeVectorStore(
-    index_name="tech-documentation",  # Replace with your actual Pinecone index name
+    index_name="tech-documentation",  
     embedding=embeddings
 )
 
 print("Initializing Groq LLM...")
 llm = ChatGroq(
-    model="qwen/qwen3.6-27b", # Valid Groq model identifier
+    model="qwen/qwen3.6-27b", 
     temperature=0
 )
 
-# Helper function for LCEL
+
 def format_docs(docs):
     return "\n\n".join(doc.page_content for doc in docs)
 
 
-# ==========================================
-# --- 2. FACTORY FUNCTION ---
-# ==========================================
+
 def build_rag_chain(active_tech: str):
     """Builds the LangChain pipeline dynamically based on the selected tech."""
 
-    # NOTE: If your database doesn't have a 'technology' metadata key,
-    # remove the 'filter' dictionary below so it searches all documents freely.
+    
     retriever = vectorstore.as_retriever(
         search_kwargs={
             "k": 5
@@ -107,12 +102,10 @@ def build_rag_chain(active_tech: str):
     return rag_chain
 
 
-# ==========================================
-# --- 3. API SCHEMAS & ENDPOINTS ---
-# ==========================================
+
 class ChatRequest(BaseModel):
     question: str
-    technology: str = "React"  # Default fallback if not specified
+    technology: str = "React" 
 
 
 @app.get("/")
@@ -120,7 +113,6 @@ async def health_check():
     return {"status": "healthy", "service": "RAG API"}
 
 
-# Streaming Endpoint
 @app.post("/chat/stream")
 async def chat_stream(request: ChatRequest):
     try:
@@ -141,7 +133,6 @@ async def chat_stream(request: ChatRequest):
         raise HTTPException(status_code=500, detail=str(e))
 
 
-# Standard Endpoint
 @app.post("/chat")
 async def chat(request: ChatRequest):
     try:
