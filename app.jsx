@@ -3,11 +3,11 @@ import { Bot, FileText, Search, Zap, ArrowRight, Github, Network, Cpu, Workflow,
 
 export default function App() {
   return (
-    // Main container with a cream-colored background as requested, plus relative positioning for background elements
+   
     <div className="min-h-screen bg-[#FDFBF7] text-slate-800 font-sans selection:bg-orange-200 selection:text-orange-900 relative overflow-hidden">
 
       {}
-      {/* Background Grid Pattern - Modern Line Grid with radial fade */}
+    
       <div
         className="absolute inset-0 z-0 pointer-events-none opacity-[0.10]"
         style={{
@@ -18,7 +18,7 @@ export default function App() {
         }}
       ></div>
 
-      {/* Decorative gradient orbs for depth */}
+     
       <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-orange-200/30 blur-[100px] z-0 pointer-events-none"></div>
       <div className="absolute top-[20%] right-[-5%] w-[30%] h-[30%] rounded-full bg-amber-200/20 blur-[80px] z-0 pointer-events-none"></div>
 
@@ -56,7 +56,7 @@ export default function App() {
             Ask your tech docs <br/>
             with <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-amber-500 relative inline-block pb-2">
               AgentFlow
-              {/* Subtle underline effect for the highlighted name */}
+              
               <div className="absolute bottom-0 left-0 w-full h-3 bg-orange-200/50 -z-10 rounded-sm"></div>
             </span>
           </h1>
@@ -83,7 +83,7 @@ export default function App() {
 
         {}
         <div className="mt-24 relative max-w-4xl mx-auto">
-          {/* Decorative background blur */}
+          
           <div className="absolute inset-0 -top-8 -bottom-8 bg-gradient-to-b from-orange-100/50 to-transparent blur-2xl rounded-[3rem] -z-10"></div>
 
           <div className="bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-100 overflow-hidden">
@@ -99,7 +99,7 @@ export default function App() {
             </div>
 
             <div className="p-8 space-y-6">
-              {/* Mock Chat UI to illustrate the RAG concept */}
+              
               <div className="flex gap-4">
                 <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center flex-shrink-0 text-sm">
                   U
@@ -145,7 +145,6 @@ export default function App() {
               AgentFlow leverages a state-of-the-art Retrieval-Augmented Generation (RAG) pipeline to deliver instant, hallucination-free answers directly from the documentation.
             </p>
 
-            {/* Tech Stack Badges */}
             <div className="flex flex-wrap justify-center gap-4">
               <span className="px-5 py-2.5 bg-white border border-slate-200 rounded-full text-sm font-medium text-slate-700 shadow-sm flex items-center gap-2 hover:shadow-md transition-shadow">
                 <Network size={18} className="text-blue-500" /> LangChain
@@ -162,13 +161,10 @@ export default function App() {
             </div>
           </div>
 
-          {/* Workflow Diagram */}
           <div className="relative mt-16">
-            {/* Connecting line for desktop */}
             <div className="hidden md:block absolute top-12 left-[10%] right-[10%] h-[2px] bg-gradient-to-r from-transparent via-orange-300 to-transparent z-0 opacity-60"></div>
 
             <div className="grid md:grid-cols-4 gap-10 relative z-10">
-              {/* Step 1 */}
               <div className="flex flex-col items-center text-center group">
                 <div className="w-24 h-24 rounded-2xl bg-white border border-slate-200 shadow-lg shadow-slate-200/50 flex items-center justify-center mb-6 relative group-hover:-translate-y-2 transition-transform duration-300">
                   <div className="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold text-sm border-4 border-[#FDFBF7]">1</div>
@@ -178,7 +174,6 @@ export default function App() {
                 <p className="text-sm text-slate-600 leading-relaxed">Tech docs are fetched, parsed, and split into semantically meaningful chunks using <span className="font-semibold text-slate-700">LangChain</span>.</p>
               </div>
 
-              {/* Step 2 */}
               <div className="flex flex-col items-center text-center group">
                 <div className="w-24 h-24 rounded-2xl bg-white border border-slate-200 shadow-lg shadow-slate-200/50 flex items-center justify-center mb-6 relative group-hover:-translate-y-2 transition-transform duration-300">
                   <div className="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold text-sm border-4 border-[#FDFBF7]">2</div>
@@ -188,7 +183,6 @@ export default function App() {
                 <p className="text-sm text-slate-600 leading-relaxed">Chunks are converted into high-dimensional embeddings via <span className="font-semibold text-slate-700">Hugging Face</span> and stored in a Vector DB.</p>
               </div>
 
-              {/* Step 3 */}
               <div className="flex flex-col items-center text-center group">
                 <div className="w-24 h-24 rounded-2xl bg-white border border-slate-200 shadow-lg shadow-slate-200/50 flex items-center justify-center mb-6 relative group-hover:-translate-y-2 transition-transform duration-300">
                   <div className="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold text-sm border-4 border-[#FDFBF7]">3</div>
@@ -198,7 +192,6 @@ export default function App() {
                 <p className="text-sm text-slate-600 leading-relaxed">User queries are embedded instantly to perform a similarity search, retrieving the exact necessary context.</p>
               </div>
 
-              {/* Step 4 */}
               <div className="flex flex-col items-center text-center group">
                 <div className="w-24 h-24 rounded-2xl bg-slate-900 border border-slate-800 shadow-lg shadow-slate-400/30 flex items-center justify-center mb-6 relative group-hover:-translate-y-2 transition-transform duration-300">
                   <div className="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-gradient-to-r from-orange-500 to-amber-500 text-white flex items-center justify-center font-bold text-sm border-4 border-[#FDFBF7]">4</div>
