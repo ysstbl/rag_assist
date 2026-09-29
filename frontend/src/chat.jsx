@@ -68,8 +68,9 @@ export default function Chat() {
       {/* Chat Messages Area */}
       <div className="flex-1 overflow-y-auto p-6 space-y-6">
         {messages.length === 0 ? (
-          <div className="text-center text-slate-400 mt-20 text-sm">
-            Ask a question about {technology} to get started!
+          <div className="text-center text-slate-400 mt-20 text-sm space-y-2">
+            <p>Ask a question about {technology} to get started!</p>
+            <p className="text-xs text-slate-400">The first response may take a few seconds while the assistant gets ready.</p>
           </div>
         ) : (
           messages.map((msg, idx) => (
@@ -142,7 +143,7 @@ export default function Chat() {
               <Bot size={16} />
             </div>
             <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-slate-500 text-sm rounded-tl-none animate-pulse">
-              Searching {technology} docs and generating answer...
+              Searching {technology} docs and generating your answer. This may take a few seconds...
             </div>
           </div>
         )}

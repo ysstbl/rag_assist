@@ -49,7 +49,7 @@ vectorstore = PineconeVectorStore(
 
 print("Initializing Groq LLM...")
 llm = ChatGroq(
-    model="qwen/qwen3.6-27b", 
+    model=os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile"),
     temperature=0
 )
 
